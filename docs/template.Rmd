@@ -1,0 +1,52 @@
+---
+title: "title"
+author: "Christopher Prener, Ph.D."
+date: '(`r format(Sys.time(), "%B %d, %Y")`)'
+output:
+  github_document: default
+  html_notebook: default
+---
+
+## Introduction
+This notebook creates the plots for ... for my sections of SOC 1120.
+
+## Packages
+This notebook requires the following packages:
+
+```{r load-dependencies}
+# tidyverse packages
+library(dplyr)          # data wrangling
+library(ggplot2)        # create plots
+library(readr)          # tabular files
+
+# plotting packages
+library(RColorBrewer)   # color schemes
+library(scales)         # plotting tools
+
+# other packages
+library(here)           # manage file paths
+```
+
+Two functions from the `source/` directory are also needed:
+
+```{r load-functions}
+# plot theme
+source(here("source", "cp_sequoiaTheme.R"))
+
+# save plots
+source(here("source", "cp_plotSave.R"))
+```
+
+The `ggthemes` package is a dependency for `cp_sequoiaTheme()` but it does not need to be loaded - as long as it is installed, the function will work as designed.
+
+## Load Data
+All of the raw data for these plots were obtained from ...
+
+They are in separate `.csv` files that we'll load individually:
+
+```{r load-data}
+
+```
+
+## Clean Data
+First, we'll tidy up the data so that it is ready for visualization.
