@@ -1,16 +1,20 @@
-# template
+# US_OUTCOMES_Stroke
 
-[![](https://img.shields.io/badge/extent-extent-red.svg)](https://github.com/slu-soc1120/template/)
-[![](https://img.shields.io/badge/category-category-orange.svg)](https://github.com/slu-soc1120/template/)
+[![](https://img.shields.io/badge/extent-us-red.svg)](https://github.com/slu-soc1120/template/)
+[![](https://img.shields.io/badge/category-health-orange.svg)](https://github.com/slu-soc1120/template/)
 [![](https://img.shields.io/github/release/slu-soc1120/template.svg?label=version)](https://github.com/slu-soc1120/template/releases)
 [![](https://img.shields.io/github/last-commit/slu-soc1120/template.svg)](https://github.com/slu-soc1120/template/commits/master)
 [![](https://img.shields.io/github/repo-size/slu-soc1120/template.svg)](https://github.com/slu-soc1120/template/)
 
 ### Abstract
-This repository contains a template for quickly creating data visualization repositories.
+This repository contains a data and code for creating maps about stroke mortality in the United States.
 
 ### Data Sources
-All of the raw data for these plots were obtained from ...
+All of the raw data for these plots were obtained from the [Centers for Disease Control](http://cdc.gov) [Stroke Maps and Data page](https://www.cdc.gov/stroke/maps_data.htm):
+
+* [Stroke Mortality Rates, All Adults, 35+](https://www.cdc.gov/dhdsp/maps/national_maps/stroke_all.htm)
+* [Stroke Mortality Rates, African America Adults, 35+](https://www.cdc.gov/dhdsp/maps/national_maps/stroke_blacks.htm)
+* [Stroke Mortality Rates, White Adults, 35+](https://www.cdc.gov/dhdsp/maps/national_maps/stroke_whites.htm)
 
 ### Preview
 
