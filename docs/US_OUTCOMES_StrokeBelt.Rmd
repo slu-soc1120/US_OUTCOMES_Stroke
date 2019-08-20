@@ -17,14 +17,15 @@ This notebook requires the following packages:
 # tidyverse packages
 library(dplyr)          # data wrangling
 library(ggplot2)        # create plots
-library(readr)          # tabular files
 
-# plotting packages
-library(RColorBrewer)   # color schemes
-library(scales)         # plotting tools
+# spatial packages
+library(sf)             # spatial data tools
+library(albersusa)      # composite projection for US
 
 # other packages
+library(ggthemes)       # themes for ggplot2
 library(here)           # manage file paths
+library(RColorBrewer)   # color ramps
 ```
 
 Two functions from the `source/` directory are also needed:
@@ -37,16 +38,52 @@ source(here("source", "cp_sequoiaTheme.R"))
 source(here("source", "cp_plotSave.R"))
 ```
 
-The `ggthemes` package is a dependency for `cp_sequoiaTheme()` but it does not need to be loaded - as long as it is installed, the function will work as designed.
-
-## Load Data
-All of the raw data for these plots were obtained from ...
-
-They are in separate `.csv` files that we'll load individually:
+## Load and Clean Data
+The data needed for this map are stored in the `albersusa` package. We'll immediately subset and modify the data to simplify what is imported:
 
 ```{r load-data}
-
+strokeBelt <- usa_sf(proj = "laea") %>%
+  select(iso_3166_2) %>%
+  rename(state = iso_3166_2) %>%
+  mutate(state = as.character(state))
 ```
 
-## Clean Data
-First, we'll tidy up the data so that it is ready for visualization.
+There are three competing definitions that we'll map from [Glymour et al 2007](https://www.ahajournals.org/doi/full/10.1161/STROKEAHA.107.482059), [Karp et al 2016](https://www.ahajournals.org/doi/full/10.1161/STROKEAHA.116.012997), and from the pNational Heart, Lung, and Blood Institute](https://web.archive.org/web/20081001162318/http://www.nhlbi.nih.gov/health/prof/heart/other/sb_spec.pdf):
+
+```{r create-states}
+sb_gly07 <- c("AL", "AR", "GA", "MS", "NC", "SC", "TN")
+sb_karp16 <- c("AL", "AR", "GA", "LA", "MS", "NC", "SC", "TN")
+sb_nhlbi <- c("AL", "AR", "GA", "IN", "KY", "LA", "MS", "NC", "SC", "TN", "VA")
+```
+
+We'll take these three definitions and create objects from them:
+
+```{r add-states}
+strokeBelt <- strokeBelt %>%
+  mutate(
+    gly07 = ifelse(state %in% sb_gly07, 1, 0),
+    karp16 = ifelse(state %in% sb_karp16, 1, 0),
+    nhlbi = ifelse(state %in% sb_nhlbi, 1, 0)
+  ) %>%
+  mutate(sum = as.factor(gly07+karp16+nhlbi))
+```
+
+## Create Stroke Belt Map
+
+```{r}
+# define colors
+pal <- brewer.pal(n = 4, name = "Purples")
+colors <- c("0" = "#bfbfbf", "1" = pal[2], "2" = pal[3], "3" = pal[4])
+
+# generate plot
+ggplot() +
+  geom_sf(data = strokeBelt, mapping = aes(fill = sum), show.legend = FALSE) +
+  geom_sf(data = strokeBelt, fill = NA, color = "#000000") +
+  scale_fill_manual(values = colors) +
+  cp_sequoiaTheme(background = "transparent", map = TRUE)
+
+# save plot
+cp_plotSave(filename = here("results", "strokeBelt.png"), preset = "sm", dpi = 500)
+```
+
+
