@@ -17,7 +17,7 @@ All of the raw data for these plots were obtained from the [Centers for Disease 
 * [Stroke Mortality Rates, White Adults, 35+](https://www.cdc.gov/dhdsp/maps/national_maps/stroke_whites.htm)
 
 ### Preview
-
+![](results/stroke_all.png)
 
 ## About SOC 1120: Introduction to Sociology - Diversity and Health Emphasis
 ### Course Description
